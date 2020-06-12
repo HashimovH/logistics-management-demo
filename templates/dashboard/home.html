@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card bg-info">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p class="text-uppercase font-size-13"><b>Total Customers</b></p>
+                                <h1 class="no-mrg-top font-size-30">{{ total_customers }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card bg-primary">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p class="text-uppercase font-size-13"><b>Total Vehicles</b></p>
+                                <h1 class="no-mrg-top font-size-30">{{  total_vehicles }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card bg-warning">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p class="text-uppercase font-size-13"><b>Completed Orders</b></p>
+                                <h1 class="no-mrg-top font-size-30">{{ completed_orders }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card bg-dark">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p class="text-uppercase font-size-13"><b>Total Orders</b></p>
+                                <h1 class="text-light no-mrg-top font-size-30">{{ total_orders }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Last 5 Orders</h4>
+                        <div class="mrg-top-20">
+                            <button class="btn btn-primary btn-sm w-100">Place an order <i class="fa fa-plus"></i></button>
+                            <table id="dt-opt" class="table table-lg table-hover">
+                                {% include 'partials/message.html' %}
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Customer</th>
+                                        <th>Vehicle</th>
+                                        <th>Executer</th>
+                                        <th>Status</th>
+                                        <th>Operations</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in last_5 %}
+                                    <tr>
+                                        <td>{{ order.id }}</td>
+                                        <td>{{ order.customer.name }}</td>
+                                        <td>{{ order.vehicle.model }} | {{ order.vehicle.person }}</td>
+                                        
+                                        <td>{{ order.executer.first_name }} {{ order.executer.last_name }}</td>
+                                        <td>
+                                            <span class="badge badge-{% if order.status == 'completed' %}success{% endif %}{% if order.status == 'executing' %}warning{% endif %}{% if order.status == 'cancelled' %}danger{% endif %}{% if order.status == 'pending' %}primary{% endif %}">
+                                                {{ order.status }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'editOrder' order.id %}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                            <a href="{% url 'deleteOrder' order.id %}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Executing Orders</h4>
+                        <div class="mrg-top-20">
+                            <button class="btn btn-primary btn-sm w-100">Place an order <i class="fa fa-plus"></i></button>
+                            <table id="dt-opt" class="table table-lg table-hover">
+                                {% include 'partials/message.html' %}
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Customer</th>
+                                        <th>Vehicle</th>
+                                        <th>Executer</th>
+                                        <th>Status</th>
+                                        <th>Operations</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in executing %}
+                                    <tr>
+                                        <td>{{ order.id }}</td>
+                                        <td>{{ order.customer.name }}</td>
+                                        <td>{{ order.vehicle.model }} | {{ order.vehicle.person }}</td>
+                                        <td>{{ order.executer.first_name }} {{ order.executer.last_name }}</td>
+                                        <td>
+                                            <span class="badge badge-{% if order.status == 'completed' %}success{% endif %}{% if order.status == 'executing' %}warning{% endif %}{% if order.status == 'cancelled' %}danger{% endif %}{% if order.status == 'pending' %}primary{% endif %}">
+                                                {{ order.status }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'editOrder' order.id %}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                            <a href="{% url 'deleteOrder' order.id %}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

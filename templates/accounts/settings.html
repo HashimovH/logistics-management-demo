@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="page-title">
+            <h4>Account Setting</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="widget-profile-1 card">
+                            <div class="profile border bottom">
+                                <img class="mrg-top-30 w-100" style="height: 344px;" src="{{ profile.profile_picture.url }}" alt="{{ request.user.first_name }} {{ request.user.last_name }}">
+                                <h4 class="mrg-top-20 no-mrg-btm text-semibold">{{ request.user.first_name }} {{ request.user.last_name }}</h4>
+                                <p>{{ profile.title }}</p>
+                            </div>
+                            <div class="pdd-horizon-30 pdd-vertical-20">
+                                <h5 class="text-semibold mrg-btm-5">About</h5>
+                                <p>{{ profile.about }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-heading border bottom">
+                                <h4 class="card-title">Profile Settings</h4>
+                            </div>
+                            <form method="POST" action="" enctype="multipart/form-data">
+                                <div class="card-block">
+                                    {% include 'partials/message.html' %}
+                                    {% csrf_token %}
+                                    {{ form|crispy }}
+                                    <button type="submit" name="submit" class="btn btn-primary">Update <i class="fa fa-edit"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

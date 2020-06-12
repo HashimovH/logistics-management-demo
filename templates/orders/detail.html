@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="main-content">
+	<div class="container-fluid">
+		<div class="page-title">
+            <h4>Order Detail</h4>
+        </div>
+        <div class="row">
+        	<div class="col-md-4">
+        		<div class="card">
+        			<div class="card-block">
+        				<h4 class="card-title">General Information</h4>
+        				<div class="mrg-top-20">
+        					<p><b>From: </b> {{ order.start }}</p>
+        					<p><b>To: </b> {{ order.destination }}</p>
+        					<p><b>Status: </b> {{ order.status }}</p>
+        					<p><b>Qaime No: </b> {{ order.qaime_no }}</p>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="col-md-4">
+        		<div class="card">
+        			<div class="card-block">
+        				<h4 class="card-title">Customer Information</h4>
+        				<div class="mrg-top-20">
+        					<p><b>Name: </b> {{ order.customer.name }}</p>
+        					<p><b>Phone 1: </b> {{ order.customer.phone1 }}</p>
+        					<p><b>Email: </b> {{ order.customer.email }}</p>
+        					<a class="btn btn-sm btn-primary" href="{% url 'detailCustomer' order.customer.id %}">More</a>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="col-md-4">
+        		<div class="card">
+        			<div class="card-block">
+        				<h4 class="card-title">Vehicle Information</h4>
+        				<div class="mrg-top-20">
+        					<p><b>Model: </b> {{ order.vehicle.model }}</p>
+        					<p><b>Responsible Person: </b> {{ order.vehicle.person }}</p>
+        					<p><b>Phone 1: </b> {{ order.vehicle.phone1 }}</p>
+        					<a class="btn btn-sm btn-primary" href="{% url 'detailVehicle' order.vehicle.id %}">More</a>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+        <div class="row">
+        	<div class="col-md-6">
+        		<div class="card">
+        			<div class="card-block">
+        				<h4 class="card-title">Payment Information</h4>
+        				<div class="mrg-top-20">
+        					<p><b>Payment Type: </b> {{ order.payment_type }}</p>
+        					<p><b>Coordinator: </b> {{ order.executer.first_name }} {{ order.executer.last_name }}</p>
+        					<p><b>Purchase Price: </b> {{ order.price_purchase }}</p>
+        					{% if request.user.is_superuser %}
+        					<p><b>Sale Price: </b> {{ order.price_selling }}</p>
+        					{% endif %}
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="col-md-6">
+        		<div class="card">
+        			<div class="card-block">
+        				<h4 class="card-title">Date Time Information</h4>
+        				<div class="mrg-top-20">
+        					<p><b>Created At: </b> {{ order.created_at }}</p>
+        					<p><b>Updated At: </b> {{ order.updated_at }}</p>
+        					<a href="{% url 'editOrder' order.id %}" class="btn btn-warning">Edit <i class="fa fa-edit"></i></a>
+        					<a href="{% url 'deleteOrder' order.id %}" class="btn btn-danger">Delete <i class="fa fa-trash"></i></a>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+	</div>
+</div>
+
+{% endblock %}

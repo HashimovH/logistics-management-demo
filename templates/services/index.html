@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="page-title">
+            <h4>Services</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="table-overflow">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="{% url 'addService' %}" class="btn btn-primary"><i class="fa fa-plus"></i> Add</a>
+                                </div>
+                            </div>
+                            <table id="dt-opt" class="table table-lg table-hover">
+                                {% include 'partials/message.html' %}
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Operations</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for service in services %}
+                                    <tr>
+                                        <td>{{ service.id }}</td>
+                                        <td>{{ service.name }}</td>
+                                        <td>
+                                            <a href="{% url 'editService' service.id %}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                            <a href="{% url 'deleteService' service.id %}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

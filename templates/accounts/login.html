@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>Logistics Operations Management System</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/logo/favicon.png">
+    <!-- plugins css -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/pace-theme-minimal.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/perfect-scrollbar.min.css'%}" />
+    <!-- core css -->
+    <link href="{% static 'css/ei-icon.css'%}" rel="stylesheet">
+    <link href="{% static 'css/themify-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/app.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app">
+        <div class="authentication">
+            <div class="sign-in">
+                <div class="row no-mrg-horizon">
+                    <div class="col-md-8 no-pdd-horizon d-none d-md-block">
+                        <div class="full-height bg" style="background-image: url('http://www.themenate.net/espire/html/dist/assets/images/others/img-29.jpg')">
+                            <div class="img-caption">
+                                <h1 class="caption-title">We simplify your operations</h1>
+                                <p class="caption-text">Logistics Operations Management System simplifies your logistics forwaring operations in order to boost efficiency!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 no-pdd-horizon">
+                        <div class="full-height bg-white height-100">
+                            <div class="vertical-align full-height pdd-horizon-70">
+                                <div class="table-cell">
+                                    <div class="pdd-horizon-15">
+                                        <h2>Login</h2>
+                                        <p class="mrg-btm-15 font-size-13">Please enter your user name and password to login</p>
+                                        <form method="POST" action="">
+                                            {% include 'partials/message.html' %}
+                                            <div class="form-group">
+                                                {% csrf_token %}
+                                                <input type="text" name="username" class="form-control" placeholder="User name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                                            </div>
+                                            <button class="btn btn-info">Login</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="login-footer">
+                                <img class="img-responsive inline-block" src="assets/images/logo/logo.png" width="100" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/vendor.js' %}"></script>
+
+    <script src="{% static 'js/app.min.js' %}"></script>
+
+    <!-- page js -->
+
+</body>
+
+</html>

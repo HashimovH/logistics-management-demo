@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extraCss %}
+<link rel="stylesheet" href="{% static 'css/jquery.dataTables.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="page-title">
+            <h4>Customers</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <form method="GET">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    {{ filter.form.updated_by|as_crispy_field }}
+                                </div>
+                                <div class="col-md-4 pt-4">
+                                    <button class="btn btn-primary" type="submit">Search <i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>   
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="table-overflow">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="{% url 'addCustomer' %}" class="btn btn-primary"><i class="fa fa-plus"></i> Add</a>
+                                </div>
+                            </div>
+                            <table id="dt-opt" class="table table-lg table-hover">
+                                {% include 'partials/message.html' %}
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Phone 1</th>
+                                        <th>Email</th>
+                                        <th>Created At</th>
+                                        <th>Operations</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for customer in customers %}
+                                    <tr>
+                                        <td>{{ customer.id }}</td>
+                                        <td>{{ customer.name }}</td>
+                                        <td>{{ customer.phone1 }}</td>
+                                        <td>{{ customer.email }}</td>
+                                        <td>{{ customer.created_at }}</td>
+                                        <td>
+                                            <a href="{% url 'detailCustomer' customer.id %}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                                            <a href="{% url 'editCustomer' customer.id %}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                            <a href="{% url 'deleteCustomer' customer.id %}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block extrajs %}
+<script src="{% static 'js/jquery.dataTables.js' %}"></script>
+<script src="{% static 'js/data-table.js' %}"></script>
+{% endblock %}

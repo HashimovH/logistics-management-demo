@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    .unread{
+        border: 1px solid #ddd;
+        font-weight: bolder;
+    }
+</style>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="page-title">
+            <h4>Notifications</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <a href="{% url 'makeSeen' %}" class="btn btn-xs btn-primary">Mark all as seen</a>
+                <ul class="list-info overflow-y-auto relative scrollable" id="notifications">
+                    {% for note in notifications %}
+                    <li class="mb-3 {% if note.read is False %} unread {% endif %}">
+                        <a href="{{ note.url }}">
+                            <img class="thumb-img" src="/media/{{ note.profile_picture }}" alt="">
+                            <div class="info">
+                                <span class="title">
+                                    <span class="font-size-14 text-semibold">{{ note.who }}</span>
+                                <span class="text-gray">{{ note.note }}</span>
+                                </span>
+                                <span class="sub-title">{{ note.created_at }}</span>
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

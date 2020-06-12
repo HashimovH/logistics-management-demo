@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extraCss %}
+<link rel="stylesheet" href="{% static 'css/jquery.dataTables.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="page-title">
+            <h4>Orders</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="accordion-1" class="accordion panel-group" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion-1" href="#collapseOne" aria-expanded="false" class="collapsed">
+                                        <span>Filter</span>
+                                        <i class="icon ti-arrow-circle-down"></i> 
+                                    </a>
+                                </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse" style="">
+                            <div class="panel-body">
+                                <form method="GET">
+                                    {{ filter.form|crispy }}
+                                    <button class="btn btn-sm btn-primary" type="submit">Search <i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="table-overflow">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="{% url 'addOrder' %}" class="btn btn-primary"><i class="fa fa-plus"></i> Add</a>
+                                </div>
+                            </div>
+                            <table id="dt-opt" class="table table-lg table-hover">
+                                {% include 'partials/message.html' %}
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Customer</th>
+                                        <th>Vehicle</th>
+                                        <th>Service</th>
+                                        <th>Executer</th>
+                                        <th>Created At</th>
+                                        <th>Status</th>
+                                        <th>Operations</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                    <tr>
+                                        <td>{{ order.id }}</td>
+                                        <td>{{ order.customer.name }}</td>
+                                        <td>{{ order.vehicle.model }} | {{ order.vehicle.person }}</td>
+                                        <td>{{ order.service.name }}</td>
+                                        <td>{{ order.executer.first_name }} {{ order.executer.last_name }}</td>
+                                        <td>{{ order.created_at }}</td>
+                                        <td>
+                                            <span class="badge badge-{% if order.status == 'completed' %}success{% endif %}{% if order.status == 'executing' %}warning{% endif %}{% if order.status == 'cancelled' %}danger{% endif %}{% if order.status == 'pending' %}primary{% endif %}">
+                                                {{ order.status }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'detailOrder' order.id %}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                                            <a href="{% url 'editOrder' order.id %}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                            <a href="{% url 'deleteOrder' order.id %}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'js/jquery.dataTables.js' %}"></script>
+<script src="{% static 'js/data-table.js' %}"></script>
+{% endblock %}

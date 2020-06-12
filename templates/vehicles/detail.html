@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="page-title">
+            <h4>{{ vehicle.model }}</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Contact Information</h4>
+                        <div class="mrg-top-20">
+                            <p><b>Phone 1: </b>{{ vehicle.phone1 }}</p>
+                            <p><b>Phone 2: </b>{{ vehicle.phone2 }}</p>
+                            <p><b>Phone 3: </b>{{ vehicle.phone3 }}</p>
+                            <p><b>Responsible Person: </b>{{ vehicle.person }}</p>
+                            <div class="mrg-top-25">
+                                <a href="{% url 'editVehicle' vehicle.id %}" class="btn btn-warning no-mrg-btm">Edit <i class="fa fa-edit"></i></a>
+                            <a href="{% url 'deleteVehicle' vehicle.id %}" class="btn btn-danger no-mrg-btm">Delete <i class="fa fa-trash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Vehicle Information</h4>
+                        <div class="mrg-top-20">
+                            <p><b>Type: </b>{{ vehicle.type_car }}</p>
+                            <p><b>Model: </b>{{ vehicle.model }}</p>
+                            <p><b>No: </b>{{ vehicle.no }}</p>
+                            <p><b>Capacity: </b>{{ vehicle.capacity }}</p>
+                            <p><b>Length: </b>{{ vehicle.length }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Notes</h4>
+                        <div class="mrg-top-20">
+                            <p><b>Area: </b>{{ vehicle.area }}</p>
+                            <p><b>Notes: </b>{{ vehicle.notes }}</p>
+                            <p><b>No: </b>{{ vehicle.no }}</p>
+                            <p><b>Evacuator Type*: </b>{{ vehicle.evakuator_type }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Last 5 Orders</h4>
+                        <div class="mrg-top-20">
+                            <table class="table table-hover table-striped">
+                                {% include 'partials/message.html' %}
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Customer</th>
+                                        <th>Vehicle</th>
+                                        <th>Service</th>
+                                        <th>Executer</th>
+                                        <th>Created At</th>
+                                        <th>Status</th>
+                                        <th>Operations</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                    <tr>
+                                        <td>{{ order.id }}</td>
+                                        <td>{{ order.customer.name }}</td>
+                                        <td>{{ order.vehicle.model }} | {{ order.vehicle.person }}</td>
+                                        <td>{{ order.service.name }}</td>
+                                        <td>{{ order.executer.first_name }} {{ order.executer.last_name }}</td>
+                                        <td>{{ order.created_at }}</td>
+                                        <td>
+                                            <span class="badge badge-{% if order.status == 'completed' %}success{% endif %}{% if order.status == 'executing' %}warning{% endif %}{% if order.status == 'cancelled' %}danger{% endif %}{% if order.status == 'pending' %}primary{% endif %}">
+                                                {{ order.status }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'editOrder' order.id %}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                            <a href="{% url 'deleteOrder' order.id %}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

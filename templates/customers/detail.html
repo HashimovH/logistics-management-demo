@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">{{ customer.name }}</h4>
+                        <div class="mrg-top-20">
+                            <p><b>Phone 1:</b>{{ customer.phone1 }}</p>
+                            <p><b>Phone 2:</b>{{ customer.phone2 }}</p>
+                            <p><b>Phone 3:</b>{{ customer.phone3 }}</p>
+                            <p><b>Email: </b>{{ customer.email }}</p>
+                            <div class="mrg-top-25">
+                                <a href="{% url 'editCustomer' customer.id %}" class="btn btn-warning no-mrg-btm">Edit <i class="fa fa-edit"></i></a>
+                                <a href="{% url 'deleteCustomer' customer.id %}" class="btn btn-danger no-mrg-btm">Delete <i class="fa fa-trash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Orders</h4>
+                        <div class="mrg-top-20">
+                            <h1 class="text-center">{{ orderCount }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <h4 class="card-title">Last 10 Orders</h4>
+                        <table class="table table-bordered table-hover mrg-top-20">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Vehicle</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
+                                    <th>Status</th>
+                                    <th>Purchase Price</th>
+                                    <th>Sale Price</th>
+                                    <th>Services</th>
+                                    <th>Operations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <td>{{ order.id }}</td>
+                                    <td>{{ order.vehicle.model }} {{ order.vehicle.no }}</td>
+                                    <td>{{ order.created_at }}</td>
+                                    <td>{{ order.updated_at }}</td>
+                                    <td>{{ order.status }}</td>
+                                    <td>{{ order.created_at }}</td>
+                                    <td>{{ order.price_purchase }}</td>
+                                    <td>{{ order.price_selling }}</td>
+                                    <td>
+                                        <a href="{% url 'editOrder' order.id %}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                        <a href="{% url 'deleteOrder' order.id %}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

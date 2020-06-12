@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="page-title">
+            <h4>Delete Order</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {% include 'partials/message.html' %}
+                <div class="card">
+                    <div class="card-heading border bottom">
+                        <h4 class="card-title">Order Form</h4>
+                    </div>
+                    <div class="card-block">
+                        <div class="mrg-top-40">
+                            <div class="row">
+                                <div class="col-md-8 ml-auto mr-auto">
+                                    <div class="jumbutron">
+                                        <h2>Are you sure to delete order "{{ order.customer.name }} with {{ order.vehicle.model }} by {{ order.executer.first_name }} {{ order.executer.last_name }}" </h2>
+                                        <form method="POST" action="">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-lg btn-danger">Delete <i class="fa fa-trash"></i></button>
+                                            <a href="{% url 'services' %}" class="btn btn-lg btn-info">Back to orders <i class="fa fa-arrow-right"></i></a>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
